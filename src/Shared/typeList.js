@@ -1,8 +1,8 @@
 export const typeList = [
-    ["danger", "warning", "danger", "primary", "yellow"],
-    ["yellow", "primary", "primary", "primary", "primary"],
-    ["primary", "danger", "danger", "yellow", "danger"],
-    ["black", "yellow", "primary", "danger", "danger"],
-    ["yellow", "primary", "danger", "yellow", "primary"]
+    ["danger", "warning", "danger", "primary", "warning"],
+    ["warning", "primary", "primary", "primary", "primary"],
+    ["primary", "danger", "danger", "warning", "danger"],
+    ["black", "warning", "primary", "danger", "danger"],
+    ["warning", "primary", "danger", "warning", "primary"]
 
 ]

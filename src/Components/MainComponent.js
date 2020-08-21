@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Row, Col, Container } from 'reactstrap'
 import GridComponent from './GridComponent';
 
 class MainComponent extends Component {
