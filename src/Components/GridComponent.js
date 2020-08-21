@@ -26,17 +26,20 @@ class GridComponent extends Component {
 
         this.state = {
             cardData: [],
-            viewData: [],
             spyMaster: false
         }
         this.gameData = this.gameData.bind(this);
-        this.viewData = this.viewData.bind(this);
         this.handleButtonData = this.handleButtonData.bind(this);
         this.handleSpyMasterView = this.handleSpyMasterView.bind(this);
+        this.handleCardClick = this.handleCardClick.bind(this);
         console.log("constructor called")
 
     }
 
+
+    /**
+     * Sets the cardData state using JSON object 
+     */
     gameData() {
         let cardArr = [];
         let i = 0;
@@ -49,6 +52,7 @@ class GridComponent extends Component {
             while (j < 5) {
                 let obj = {
                     row: i,
+                    col: j,
                     word: wordList[i][j],
                     type: typeList[i][j],
                     played: false
@@ -61,27 +65,31 @@ class GridComponent extends Component {
         }
         return cardArr;
     }
-    viewData() {
-        let viewArr = [];
+    // viewData() {
+    //     let viewArr = [];
 
-        let i = 0;
-        while (i < 5) {
-            let innerArr = [];
-            let j = 0;
-            while (j < 5) {
-                // let obj = {
-                //     color: "secondary"
-                // }
-                innerArr.push("secondary");
-                j++;
-            }
+    //     let i = 0;
+    //     while (i < 5) {
+    //         let innerArr = [];
+    //         let j = 0;
+    //         while (j < 5) {
+    //             // let obj = {
+    //             //     color: "secondary"
+    //             // }
+    //             innerArr.push("secondary");
+    //             j++;
+    //         }
 
-            viewArr.push(innerArr);
-            i++;
-        }
-        return viewArr;
-    }
+    //         viewArr.push(innerArr);
+    //         i++;
+    //     }
+    //     return viewArr;
+    // }
 
+
+    /**
+     * Handles the view of the card based on Spy master view button click
+     */
     handleSpyMasterView() {
         if (this.state.spyMaster) {
             this.setState({
@@ -95,6 +103,35 @@ class GridComponent extends Component {
         }
     }
 
+
+    /**
+     * Handles the view and the state when card is clicked
+     * @param {*} event 
+     */
+    handleCardClick(event) {
+
+        let row = event.target.dataset.row;
+        let col = event.target.dataset.col;
+
+        console.log(this.state.cardData[row][col])
+
+        let arr = this.state.cardData;
+
+        arr[row][col].played = true;
+
+
+        this.setState({
+            cardData: arr
+        })
+        console.log(this.state.cardData[row][col])
+
+    }
+
+
+    /**
+     * Handles the card view based on the state
+     * @param {number} row 
+     */
     handleButtonData(row) {
         let rowData;
         if (!this.state.spyMaster) {
@@ -103,14 +140,14 @@ class GridComponent extends Component {
                 if (obj.played) {
                     return (
 
-                        <Col key={obj.word} className="cardBody" xs="2"><Card inverse color={obj.type}><CardTitle>{obj.word}</CardTitle></Card></Col>
+                        <Col key={obj.word} className="cardBody" xs="2"><Card inverse color={obj.type}><CardTitle><div id={obj.word} onClick={this.handleCardClick}>{obj.word}</div></CardTitle></Card></Col>
 
                     );
                 }
                 else {
                     return (
 
-                        <Col key={obj.word} className="cardBody" xs="2"><Card inverse color="secondary"><CardTitle>{obj.word}</CardTitle></Card></Col>
+                        <Col key={obj.word} className="cardBody" xs="2"><Card inverse color="secondary"><CardTitle><div data-row={obj.row} data-col={obj.col} onClick={this.handleCardClick}>{obj.word}</div></CardTitle></Card></Col>
 
                     );
                 }
@@ -123,14 +160,14 @@ class GridComponent extends Component {
                 if (obj.played) {
                     return (
 
-                        <Col key={obj.word} className="cardBody" xs="2"><Card inverse color={obj.type}><CardTitle>{obj.word}</CardTitle></Card></Col>
+                        <Col key={obj.word} className="cardBody" xs="2"><Card inverse color={obj.type}><CardTitle><div id={obj.word} onClick={this.handleCardClick}>{obj.word}</div></CardTitle></Card></Col>
 
                     );
                 }
                 else {
                     return (
 
-                        <Col key={obj.word} className="cardBody" xs="2"><Card inverse color="secondary"><CardTitle className={`text-${obj.type}`}>{obj.word}</CardTitle></Card></Col>
+                        <Col key={obj.word} className="cardBody" xs="2"><Card inverse color="secondary"> <CardTitle className={`text-${obj.type}`}><div id={obj.word} onClick={this.handleCardClick}>{obj.word}</div></CardTitle></Card></Col>
 
                     );
                 }
